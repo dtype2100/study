@@ -7,6 +7,8 @@ from database.orm import Todo
 from repository import get_todos
 from schema.response import ListToDoRespinse
 from schema.response import ToDoSchema
+from repository import *
+from flask import session
 
 
 app = FastAPI()
@@ -49,10 +51,13 @@ def get_todos_handler(order: str | None = None,
     ) # todos # ret
 
 @app.get("/todos/{todo_id}", status_code=200)
-def get_todo_handler(todo_id: int):
-    todo = todo_data.get(todo_id)
+def get_todo_handler(todo_id: int,
+                     session: Session = Depends(get_db),
+                     ) -> ToDoSchema:
+    # todo = todo_data.get(todo_id)
+    todo: Todo | None = get_todo_by_todo_id(session=session, todo_id=todo_id) #
     if todo:
-        return todo
+        return ToDoSchema.from_orm(todo)
     return HTTPException(status_code=404, detail="Todo Not Found")
 
 class CreateTodoRequest(BaseModel):

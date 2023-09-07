@@ -6,10 +6,14 @@ Base = declarative_base()
 class Todo(Base):
     __tablename__ = "todos"
 
+    # id = Column(Integer, primary_key=True, index=True)
+    # contents = Column(String(256), nullable=False)
+    # # contents = Column(String(256), primary_key=True, nullable=False)
+    # is_done = Column(Boolean, nullable=False)
+
     id = Column(Integer, primary_key=True, index=True)
-    contents = Column(String(256), nullable=False)
-    # contents = Column(String(256), primary_key=True, nullable=False)
-    is_done = Column(Boolean, nullable=False)
+    contents = Column(String, index=True)
+    is_done = Column(Boolean, default=False)
 
 
     def __repr__(self):

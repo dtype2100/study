@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List
 
 class ToDoSchema(BaseModel):
     id: int
@@ -10,5 +9,5 @@ class ToDoSchema(BaseModel):
         # orm_mode = True
         from_attributes = True
 
-class ListToDoRespinse(BaseModel):
-    todos: List[ToDoSchema]
+class ToDoListSchema(BaseModel):
+    todos: list[ToDoSchema]
